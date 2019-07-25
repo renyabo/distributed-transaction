@@ -19,8 +19,24 @@
         DROP TABLE IF EXISTS t_order;
     </update>
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="orderId">
+    <update id="updateByIds" parameterType="list">
+        UPDATE t_order
+        SET user_id=CONCAT(user_id,'1')
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            (#{id})
+        </foreach>
+    </update>
+
+    <insert id="insert" parameterType="org.yabo.distributed.transaction.common.Order">
         INSERT INTO t_order (id,user_id, status) VALUES (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR});
+    </insert>
+
+    <insert id="insertBatch" parameterType="list">
+        INSERT INTO t_order (id,user_id, status) VALUES
+        <foreach collection="list" item="order" separator=",">
+            (#{order.id,jdbcType=VARCHAR}, #{order.userId,jdbcType=VARCHAR}, #{order.status,jdbcType=VARCHAR})
+        </foreach>
     </insert>
 
     <delete id="delete">

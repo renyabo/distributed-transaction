@@ -13,6 +13,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
@@ -25,6 +26,7 @@ import java.util.Map;
 import java.util.Properties;
 
 @Configuration
+@PropertySource("classpath:respository.properties")
 @MapperScan("org.yabo.sharding.jdbc.repository")
 public class Config {
     @Bean("dataSource")

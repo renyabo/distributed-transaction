@@ -20,8 +20,25 @@
         DROP TABLE IF EXISTS t_order_item;
     </update>
 
+    <update id="updateByIds" parameterType="list">
+        UPDATE t_order_item
+        SET user_id=CONCAT(user_id,'1')
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            (#{id})
+        </foreach>
+    </update>
+
     <insert id="insert" useGeneratedKeys="true" keyProperty="orderItemId">
         INSERT INTO t_order_item (id,order_id, user_id, status) VALUES (#{id,jdbcType=VARCHAR},#{orderId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR});
+    </insert>
+
+    <insert id="insertBatch" parameterType="list">
+        INSERT INTO t_order_item (id,order_id, user_id, status) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id,jdbcType=VARCHAR}, #{item.orderId,jdbcType=VARCHAR}, #{item.userId,jdbcType=VARCHAR},
+            #{item.status,jdbcType=VARCHAR})
+        </foreach>
     </insert>
 
     <delete id="delete">

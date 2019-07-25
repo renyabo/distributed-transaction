@@ -1,5 +1,8 @@
 package org.yabo.sharding.jdbc.repository;
 
+import org.apache.ibatis.annotations.Param;
+import org.yabo.distributed.transaction.common.Order;
+
 import java.util.List;
 
 public interface MapperApi<T> {
@@ -25,14 +28,14 @@ public interface MapperApi<T> {
      * @param entity entity
      * @return count or primary key
      */
-    Long insert(T entity);
+    int insert(T entity);
 
     /**
      * Do delete.
      *
      * @param key key
      */
-    void delete(String key);
+    int delete(String key);
 
     /**
      * select all.
@@ -42,4 +45,8 @@ public interface MapperApi<T> {
     List<T> selectAll();
 
     List<T> selectRange();
+
+    int updateByIds(@Param("ids") List<String> ids);
+
+    int insertBatch(List<Order> orders);
 }
