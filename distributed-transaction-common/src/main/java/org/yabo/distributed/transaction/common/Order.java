@@ -6,25 +6,25 @@ public class Order implements Serializable {
 
     private static final long serialVersionUID = 661434701950670670L;
 
-    private long orderId;
+    private String id;
 
-    private int userId;
+    private String userId;
 
     private String status;
 
-    public long getOrderId() {
-        return orderId;
+    public String getId() {
+        return id;
     }
 
-    public void setOrderId(final long orderId) {
-        this.orderId = orderId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(final int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -32,12 +32,16 @@ public class Order implements Serializable {
         return status;
     }
 
-    public void setStatus(final String status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
     @Override
     public String toString() {
-        return String.format("order_id: %s, user_id: %s, status: %s", orderId, userId, status);
+        return "Order{" +
+                "id='" + id + '\'' +
+                ", userId='" + userId + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

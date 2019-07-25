@@ -2,7 +2,7 @@ package org.yabo.sharding.jdbc.repository;
 
 import java.util.List;
 
-public interface MapperApi<T, P> {
+public interface MapperApi<T> {
 
     /**
      * Create table if not exist.
@@ -32,7 +32,7 @@ public interface MapperApi<T, P> {
      *
      * @param key key
      */
-    void delete(P key);
+    void delete(String key);
 
     /**
      * select all.

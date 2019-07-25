@@ -6,35 +6,35 @@ public class OrderItem implements Serializable {
 
     private static final long serialVersionUID = 263434701950670170L;
 
-    private long orderItemId;
+    private String id;
 
-    private long orderId;
+    private String orderId;
 
-    private int userId;
+    private String userId;
 
     private String status;
 
-    public long getOrderItemId() {
-        return orderItemId;
+    public String getId() {
+        return id;
     }
 
-    public void setOrderItemId(final long orderItemId) {
-        this.orderItemId = orderItemId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public long getOrderId() {
+    public String getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(final long orderId) {
+    public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(final int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -42,12 +42,17 @@ public class OrderItem implements Serializable {
         return status;
     }
 
-    public void setStatus(final String status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
     @Override
     public String toString() {
-        return String.format("order_item_id:%s, order_id: %s, user_id: %s, status: %s", orderItemId, orderId, userId, status);
+        return "OrderItem{" +
+                "id='" + id + '\'' +
+                ", orderId='" + orderId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.yabo.sharding.jdbc.repository.OrderItemMapper">
     <resultMap id="baseResultMap" type="org.yabo.distributed.transaction.common.OrderItem">
-        <result column="order_item_id" property="orderItemId" jdbcType="INTEGER"/>
-        <result column="order_id" property="orderId" jdbcType="INTEGER"/>
-        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="order_id" property="orderId" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="VARCHAR"/>
     </resultMap>
 
     <update id="createTableIfNotExists">
-        CREATE TABLE IF NOT EXISTS t_order_item (order_item_id BIGINT AUTO_INCREMENT, order_id BIGINT, user_id INT NOT NULL, status VARCHAR(50) , PRIMARY KEY (order_item_id));
+        CREATE TABLE IF NOT EXISTS t_order_item (id VARCHAR(256), order_id VARCHAR(256), user_id VARCHAR(256), status VARCHAR(50) , PRIMARY KEY (id));
     </update>
 
     <update id="truncateTable">
@@ -21,18 +21,18 @@
     </update>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="orderItemId">
-        INSERT INTO t_order_item (order_id, user_id, status) VALUES (#{orderId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR});
+        INSERT INTO t_order_item (id,order_id, user_id, status) VALUES (#{id,jdbcType=VARCHAR},#{orderId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR});
     </insert>
 
     <delete id="delete">
-        DELETE FROM t_order_item WHERE order_id = #{orderId,jdbcType=INTEGER};
+        DELETE FROM t_order_item WHERE order_id = #{orderId,jdbcType=VARCHAR};
     </delete>
 
     <select id="selectAll" resultMap="baseResultMap">
-        SELECT i.* FROM t_order o, t_order_item i WHERE o.order_id = i.order_id;
+        SELECT i.* FROM t_order o, t_order_item i WHERE o.id = i.order_id;
     </select>
 
     <select id="selectRange" resultMap="baseResultMap">
-        SELECT i.* FROM t_order o, t_order_item i WHERE o.order_id = i.order_id AND o.user_id BETWEEN 1 AND 5
+        SELECT i.* FROM t_order o, t_order_item i WHERE o.id = i.order_id AND o.user_id BETWEEN `1` AND `444444444444444444443334445`
     </select>
 </mapper>

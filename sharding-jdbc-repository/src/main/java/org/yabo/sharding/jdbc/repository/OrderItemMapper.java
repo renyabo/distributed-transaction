@@ -4,5 +4,5 @@ import org.apache.ibatis.annotations.Mapper;
 import org.yabo.distributed.transaction.common.OrderItem;
 
 @Mapper
-public interface OrderItemMapper extends MapperApi<OrderItem,Long>{
+public interface OrderItemMapper extends MapperApi<OrderItem>{
 }
