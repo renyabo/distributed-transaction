@@ -32,7 +32,7 @@ public class Config {
         ShardingRuleConfiguration shardingRuleConfig = new ShardingRuleConfiguration();
         shardingRuleConfig.getTableRuleConfigs().add(orderTableRuleConfiguration());
         shardingRuleConfig.getTableRuleConfigs().add(orderItemTableRuleConfiguration());
-        shardingRuleConfig.getBindingTableGroups().add("order, order_item");
+        shardingRuleConfig.getBindingTableGroups().add("t_order, t_order_item");
         shardingRuleConfig.setDefaultDatabaseShardingStrategyConfig(new StandardShardingStrategyConfiguration("id", new PreciseShardingAlgorithm<String>() {
             @Override
             public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<String> shardingValue) {
@@ -63,7 +63,7 @@ public class Config {
         sqlSessionFactoryBean.setConfiguration(configuration);
         try {
             ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
-            sqlSessionFactoryBean.setMapperLocations(resourcePatternResolver.getResources("classpath:/mapper/*.xml"));
+            sqlSessionFactoryBean.setMapperLocations(resourcePatternResolver.getResources("classpath*:/mapper/*.xml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -80,7 +80,7 @@ public class Config {
     }
 
     private TableRuleConfiguration orderTableRuleConfiguration() {
-        TableRuleConfiguration result = new TableRuleConfiguration("order", "sharding_${0..1}.order${0..1}");
+        TableRuleConfiguration result = new TableRuleConfiguration("t_order", "ds${0..1}.t_order${0..1}");
         result.setDatabaseShardingStrategyConfig(new StandardShardingStrategyConfiguration("id", new PreciseShardingAlgorithm<String>() {
             @Override
             public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<String> shardingValue) {
@@ -113,7 +113,7 @@ public class Config {
     }
 
     private TableRuleConfiguration orderItemTableRuleConfiguration() {
-        TableRuleConfiguration result = new TableRuleConfiguration("order_item", "sharding_${0..1}.order_item");
+        TableRuleConfiguration result = new TableRuleConfiguration("t_order_item", "ds${0..1}.t_order_item${0..1}");
         result.setDatabaseShardingStrategyConfig(new StandardShardingStrategyConfiguration("order_id", new PreciseShardingAlgorithm<String>() {
             @Override
             public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<String> shardingValue) {
