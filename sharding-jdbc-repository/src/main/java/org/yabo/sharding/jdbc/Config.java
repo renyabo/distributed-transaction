@@ -48,8 +48,10 @@ public class Config {
                 return null;
             }
         }));
+        Properties properties = new Properties();
+        properties.setProperty("sql.show", "true");
         try {
-            return ShardingDataSourceFactory.createDataSource(createDataSourceMap(), shardingRuleConfig, new Properties());
+            return ShardingDataSourceFactory.createDataSource(createDataSourceMap(), shardingRuleConfig, properties);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -119,14 +121,29 @@ public class Config {
         result.setDatabaseShardingStrategyConfig(new StandardShardingStrategyConfiguration("order_id", new PreciseShardingAlgorithm<String>() {
             @Override
             public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<String> shardingValue) {
-                System.err.println("orderItem --> availableTargetNames:" + availableTargetNames + "," + shardingValue.getColumnName() + "," + shardingValue.getLogicTableName() + "," + shardingValue.getValue());
-                String targetNode = String.valueOf((int) shardingValue.getValue().charAt(0) % availableTargetNames.size());
+                System.err.println("orderItem database sharding -->  availableTargetNames:" + availableTargetNames + "," + shardingValue.getColumnName() + "," + shardingValue.getLogicTableName() + "," + shardingValue.getValue());
+                String targetNode = String.valueOf(shardingValue.getValue().codePointAt(0) % availableTargetNames.size());
                 for (String name : availableTargetNames) {
                     if (name.endsWith(targetNode)) {
+                        System.err.println("db select:" + name);
                         return name;
                     }
                 }
                 return null;
+            }
+        }));
+        result.setTableShardingStrategyConfig(new StandardShardingStrategyConfiguration("order_id", new PreciseShardingAlgorithm<String>() {
+            @Override
+            public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<String> shardingValue) {
+                System.err.println("orderItem table sharding：availableTargetNames:" + availableTargetNames + "," + shardingValue.getColumnName() + "," + shardingValue.getLogicTableName() + "," + shardingValue.getValue());
+                String targetTable = String.valueOf(shardingValue.getValue().codePointAt(shardingValue.getValue().length() - 1) % availableTargetNames.size());
+                for (String name : availableTargetNames) {
+                    if (name.endsWith(targetTable)) {
+                        System.err.println("table select :" + name);
+                        return name;
+                    }
+                }
+                return "order";
             }
         }));
         return result;
@@ -143,8 +160,8 @@ public class Config {
 
         BasicDataSource ds1 = new BasicDataSource();
         ds1.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        ds1.setUrl("jdbc:mysql://192.168.115.129:3306/ds1?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT");
-        ds1.setUsername("yabo");
+        ds1.setUrl("jdbc:mysql://192.168.115.129:33306/ds1?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT");
+        ds1.setUsername("root");
         ds1.setPassword("123456");
         result.put("ds1", ds1);
         return result;

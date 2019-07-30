@@ -35,7 +35,7 @@ public interface MapperApi<T> {
      *
      * @param key key
      */
-    int delete(String key);
+    int delete(@Param("id") String id);
 
     /**
      * select all.

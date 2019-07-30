@@ -12,6 +12,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>local-transaction</module>
+        <module>xa-transaction</module>
+        <module>base-transaction</module>
     </modules>
 
     <dependencies>
@@ -20,6 +22,16 @@
             <artifactId>sharding-jdbc-repository</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-    </dependencies>
 
+        <dependency>
+            <groupId>org.apache.shardingsphere</groupId>
+            <artifactId>sharding-transaction-core</artifactId>
+            <version>4.0.0-RC2</version>
+        </dependency>
+
+
+
+
+
+    </dependencies>
 </project>

@@ -42,7 +42,7 @@
     </insert>
 
     <delete id="delete">
-        DELETE FROM t_order_item WHERE order_id = #{orderId,jdbcType=VARCHAR};
+        DELETE FROM t_order_item WHERE id = #{id,jdbcType=VARCHAR};
     </delete>
 
     <select id="selectAll" resultMap="baseResultMap">

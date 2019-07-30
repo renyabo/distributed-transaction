@@ -22,7 +22,7 @@
     </parent>
 
     <properties>
-        <sharding-sphere.version>4.0.0-RC1</sharding-sphere.version>
+        <sharding-sphere.version>4.0.0-RC2</sharding-sphere.version>
         <mybatis.version>3.5.1</mybatis.version>
         <commons-dbcp>1.4</commons-dbcp>
     </properties>
